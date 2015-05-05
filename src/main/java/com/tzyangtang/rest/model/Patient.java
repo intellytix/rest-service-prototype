@@ -7,11 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 @Entity
 @Table(name = "PT")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Patient implements Serializable {
 
 	@Id

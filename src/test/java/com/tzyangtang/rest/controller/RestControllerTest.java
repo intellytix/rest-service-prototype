@@ -1,15 +1,18 @@
 package com.tzyangtang.rest.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -40,6 +43,7 @@ public class RestControllerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		Mockito.reset(patientServiceMock);
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
@@ -56,5 +60,35 @@ public class RestControllerTest {
 		mockMvc.perform(get("/rest/patients").accept(MediaType.ALL))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].firstName").value("john1"));
+	}
+
+	@Test
+	public void testGlocalExceptionHandlerReturn400() throws Exception {
+
+		when(patientServiceMock.getPatients()).thenThrow(
+				new SQLException("I am a fake SQL exception"));
+		mockMvc.perform(get("/rest/patients")).andExpect(
+				status().isBadRequest());
+	}
+
+	@Test
+	public void testSavePatientMethod() throws Exception {
+		Patient fake = new Patient();
+		fake.setFirstName("john1");
+		fake.setLastName("doe");
+		fake.setId("8888");
+
+		mockMvc.perform(
+				post("/rest/patients").contentType(
+						TestUtil.APPLICATION_JSON_UTF8).content(
+						TestUtil.convertObjectToJsonBytes(fake)))
+				.andDo(print()).andExpect(status().isCreated());
+
+		// ArgumentCaptor<Patient> dtoCaptor = ArgumentCaptor
+		// .forClass(Patient.class);
+		// verify(patientServiceMock).savePatient(dtoCaptor.capture());
+		//
+		// Patient dtoArgument = dtoCaptor.getValue();
+		// assertNull(dtoArgument.getId());
 	}
 }

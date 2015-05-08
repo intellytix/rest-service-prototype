@@ -24,55 +24,30 @@ public class RestController {
 
 	@RequestMapping(value = "/patients", method = RequestMethod.GET)
 	public @ResponseBody
-	List<Patient> getPatients() {
-
-		List<Patient> patients = null;
-		try {
-			patients = patientService.getPatients();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return patients;
+	List<Patient> getPatients() throws Exception {
+		return patientService.getPatients();
 	}
 
 	@RequestMapping(value = "/patients", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Status savePatient(@RequestBody Patient patient) {
-		try {
-			patientService.savePatient(patient);
-			return new Status(1, "Patient updated Successfully !");
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return new Status(0, e.toString());
-		}
+	public void savePatient(@RequestBody Patient patient) throws Exception {
+		System.out.println(patient.getFirstName());
+		patientService.savePatient(patient);
 	}
 
 	@RequestMapping(value = "/patient/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Status deletePatient(@PathVariable String id) {
-		try {
-			patientService.deletePatient(id);
-			return new Status(1, "Patient deleted Successfully!");
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return new Status(0, e.toString());
-		}
+	public void deletePatient(@PathVariable String id) throws Exception {
+		patientService.deletePatient(id);
 	}
 
 	@RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Patient getPatient(@PathVariable String id) {
-		try {
-			return patientService.getPatient(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public Patient getPatient(@PathVariable String id) throws Exception {
+		return patientService.getPatient(id);
 	}
 
 }

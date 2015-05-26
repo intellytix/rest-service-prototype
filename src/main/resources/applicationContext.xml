@@ -7,8 +7,20 @@
   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
-	<context:component-scan base-package="com.tzyangtang.rest.controller" />
-	<mvc:annotation-driven />
+	<context:component-scan base-package="com.tzyangtang.rest" />
+	<mvc:interceptors>
+		<bean class="com.tzyangtang.rest.common.GeneralInterceptor" />
+	</mvc:interceptors>
+	<mvc:annotation-driven>
+	    <!-- Enabling custom date format -->
+<!-- 		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="dateObjectMapper" />
+			</bean>
+		</mvc:message-converters> -->
+	</mvc:annotation-driven>
+	<!-- <bean id="dateObjectMapper" class="com.tzyangtang.rest.common.DateObjectMapper" /> -->
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

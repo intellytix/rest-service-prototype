@@ -1,4 +1,4 @@
-package com.tzyangtang.rest.controller;
+package com.tzyangtang.rest.common;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class GlobalErrorHandler {
+public class GlobalDefaultExceptionHandler {
 	private static final Logger logger = Logger
-			.getLogger(GlobalErrorHandler.class);
+			.getLogger(GlobalDefaultExceptionHandler.class);
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(Exception.class)

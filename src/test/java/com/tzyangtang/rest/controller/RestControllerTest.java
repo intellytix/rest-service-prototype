@@ -63,7 +63,7 @@ public class RestControllerTest {
 	}
 
 	@Test
-	public void testGlocalExceptionHandlerReturn400() throws Exception {
+	public void testGlobalExceptionHandlerReturn400() throws Exception {
 
 		when(patientServiceMock.getPatients()).thenThrow(
 				new SQLException("I am a fake SQL exception"));

@@ -1,6 +1,7 @@
 package com.tzyangtang.rest.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,9 @@ public class Patient implements Serializable {
 
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Column(name="DATE_OF_BIRTH")
+	private Date dateOfBirth;
 
 	public String getId() {
 		return id;
@@ -43,6 +47,14 @@ public class Patient implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 }

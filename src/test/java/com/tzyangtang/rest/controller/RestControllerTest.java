@@ -83,12 +83,5 @@ public class RestControllerTest {
 						TestUtil.APPLICATION_JSON_UTF8).content(
 						TestUtil.convertObjectToJsonBytes(fake)))
 				.andDo(print()).andExpect(status().isCreated());
-
-		// ArgumentCaptor<Patient> dtoCaptor = ArgumentCaptor
-		// .forClass(Patient.class);
-		// verify(patientServiceMock).savePatient(dtoCaptor.capture());
-		//
-		// Patient dtoArgument = dtoCaptor.getValue();
-		// assertNull(dtoArgument.getId());
 	}
 }
